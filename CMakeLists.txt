@@ -8,16 +8,22 @@ find_package(SDL2 REQUIRED)
 set(SRCS
     src/main.cpp
     src/game.cpp
+    src/board.cpp
     src/player.cpp
     src/ball.cpp
+    src/movingball.cpp
+    src/renderer.cpp
 )
 set(HEADERS
     include/game.hpp
-    include/params.h
-    include/ball.hpp
+    include/board.hpp
     include/player.hpp
-    include/utils.hpp
+    include/ball.hpp
+    include/movingball.hpp
+    include/renderer.hpp
     include/vector.hpp
+    include/utils.hpp
+    include/config.h
 )
 set(ASSETS
     # ...

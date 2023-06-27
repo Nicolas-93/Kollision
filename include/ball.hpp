@@ -5,6 +5,7 @@
 #include <vector>
 #include <iostream>
 #include "vector.hpp"
+#include "renderer.hpp"
 
 enum class Side {
     NONE = 0,
@@ -16,40 +17,25 @@ enum class Side {
 
 class Ball {
     protected:
-        int radius;
-        Vector2<float> pos = Vector2<float>(0, 0);
-        SDL_Color color = {255, 0, 0, 255};
+        int mRadius;
+        Vector2<float> mPos = Vector2<float>(0, 0);
+        SDL_Color mColor = {255, 0, 0, 255};
     public:
-        Ball(int x, int y, int radius);
+        Ball(float x, float y, int radius);
         Ball(int radius, SDL_Rect box);
         virtual ~Ball();
         int getRadius(void) const;
         void setRadius(int radius);
         int getDiameter(void);
         friend std::ostream& operator<<(std::ostream& os, const Ball& ball);
-        void setPos(int x, int y);
+        void setPos(Vector2<float> pos);
+        Vector2<float> getPos(void);
         virtual void process(float delta);
-        virtual void render(SDL_Renderer* renderer);
+        virtual void render(Renderer& renderer);
         virtual bool collidingWith(const Ball& other);
         virtual Side collidingWith(const SDL_Rect& viewport);
         //virtual bool collidingWith(const std::vector<MovingBall> &balls); // A revoir
         float distWith(Ball other);
-};
-
-class MovingBall: public Ball {
-    private:
-        Vector2<float> speed = Vector2<float>(1, 1);
-        void initSpeed(int speed);
-
-    public:
-        MovingBall(int x, int y, int radius, int speed);
-        MovingBall(int radius, SDL_Rect box, int speed);
-        void setSpeed(int speed);
-        using Ball::collidingWith;
-        bool collidingWith(const std::vector<MovingBall> &balls);
-        void resolveCollision(MovingBall &other);
-        void resolveCollision(const SDL_Rect &viewport);
-        void process(float delta);
 };
 
 #endif

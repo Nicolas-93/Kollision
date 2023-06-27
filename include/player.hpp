@@ -2,18 +2,22 @@
 #define PLAYER_H
 
 #include "ball.hpp"
+#include "renderer.hpp"
 
 class Player {
     private:
-        Ball ball;
+        Ball mBall;
 
     public:
         Player(int x, int y);
         virtual ~Player(void);
-        void setPos(int x, int y);
-        Ball getBall(void);
+        Vector2<float> getPos(void);
+        void setPos(Vector2<float> pos);
+        Ball& getBall(void);
+        void handleInput(void);
         void process(float delta);
-        void render(SDL_Renderer* renderer);
+        void render(Renderer& renderer);
+    friend class Board;
 };
 
 #endif

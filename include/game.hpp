@@ -1,29 +1,19 @@
-#ifndef GAME_INCLUDED
-#define GAME_INCLUDED
+#ifndef GAME_H
+#define GAME_H
 
-#include "params.h"
-#include "ball.hpp"
-#include "player.hpp"
-#include <vector>
-#include <random>
+#include "config.h"
+#include "board.hpp"
+#include "renderer.hpp"
 
 class Game {
     private:
-        Config conf;
-        SDL_Renderer* renderer;
-        SDL_Rect viewport;
-
-        bool running = true;
-        std::vector<MovingBall> balls;
-        Player p1;
-        void initMatch(void);
+        Board mBoard;
+        Renderer& mRenderer;
 
     public:
-        Game(Config conf, SDL_Renderer* renderer);
+        Game(Config conf, Renderer& renderer);
         ~Game();
-        void handle_event(void);
-        void process(float delta);
-        void render(SDL_Renderer* renderer);
+
         void run(void);
 };
 

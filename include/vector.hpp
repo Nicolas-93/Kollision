@@ -4,10 +4,9 @@
 
 template <class T>
 class Vector2 {
-    private:
+    public:
         T x = 0;
         T y = 0;
-    public:
         Vector2(T x, T y) : x(x), y(y) {
 
         }
