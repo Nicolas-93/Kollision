@@ -32,6 +32,12 @@ class Vector2 {
         void negY(void) {
             this->y *= -1;
         }
+        void norm(void) {
+            return std::sqrt((x * x) + (y * y));
+        }
+        float normSq(void) {
+            return (x * x) + (y * y);
+        }
         void operator+=(Vector2<T> const &other) {
             this->x += other.x;
             this->y += other.y;
@@ -59,6 +65,9 @@ class Vector2 {
         }
         Vector2<T> operator*(T n) {
             return Vector2<T>(x * n, y * n);
+        }
+        Vector2<T> operator/(T n) {
+            return Vector2<T>(x / n, y / n);
         }
 };
 

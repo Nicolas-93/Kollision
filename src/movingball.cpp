@@ -51,6 +51,21 @@ void MovingBall::resolveCollision(const SDL_Rect& viewport) {
 }
 
 void MovingBall::resolveCollision(MovingBall& other) {
-    // Gérer les KOLLISIONS
-    std::swap(mSpeed, other.mSpeed);
+    // KOLLISION !
+    // std::swap(mSpeed, other.mSpeed);
+
+    Vector2<float> v1 = mSpeed - \
+        (mPos - other.mPos) * \
+        ((2 * other.mRadius) / (mRadius + other.mRadius)) * \
+        (((mSpeed - other.mSpeed) * (mPos - other.mPos)) / \
+        (mPos - other.mPos).normSq());
+
+    Vector2<float> v2 = other.mSpeed - \
+        (other.mPos - mPos) * \
+        ((2 * mRadius) / (mRadius + other.mRadius)) * \
+        (((other.mSpeed - mSpeed) * (other.mPos - mPos)) / \
+        (other.mPos - mPos).normSq());
+
+    mSpeed = v1;
+    other.mSpeed = v2;
 }
