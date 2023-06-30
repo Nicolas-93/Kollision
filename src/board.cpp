@@ -4,14 +4,17 @@
 #include <stdexcept>
 #include <algorithm>
 #include <iostream>
+#include <thread>
 #include <SDL2/SDL2_gfxPrimitives.h>
 
-Board::Board(SDL_Rect viewport, int nbBalls) :
+Board::Board(SDL_Rect viewport, int nbBalls, int newBallsDelay) :
     mViewport(viewport),
     mP1(Player(viewport.w / 2, viewport.h / 2)),
-    mRunning(true)
+    mRunning(true),
+    mNewBallsDelay(newBallsDelay)
 {
     initMatch(nbBalls);
+    initBallFactory();
 }
 
 Board::~Board() {
@@ -19,13 +22,29 @@ Board::~Board() {
 }
 
 void Board::initMatch(int nbBalls) {
-    for (int i = 0; i < nbBalls; ) {
+    for (int i = 0; i < nbBalls; ++i) {
+        addBall();
+    }
+}
+
+void Board::addBall(void) {
+    while (true) {
         MovingBall mb = MovingBall(10, mViewport, 20);
         if (!mb.collidingWith(mBalls)) {
             mBalls.push_back(mb);
-            i++;
+            break;
         }
     }
+}
+
+void Board::initBallFactory(void) {
+    mBallFactory = std::thread([&] (void) {
+        while (isRunning()) {
+            std::this_thread::sleep_for(std::chrono::seconds(mNewBallsDelay));
+            addBall();
+        }
+    });
+    mBallFactory.detach();
 }
 
 void Board::handleInput(void) {

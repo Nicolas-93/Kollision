@@ -5,7 +5,10 @@
 using namespace std;
 
 Game::Game(Config conf, Renderer& renderer) :
-    mBoard((SDL_Rect) {0, 0, conf.win.width, conf.win.height}, conf.nb_balls),
+    mBoard(
+        (SDL_Rect) {0, 0, conf.win.width, conf.win.height},
+        conf.nb_balls, conf.new_balls_delay
+    ),
     mRenderer(renderer)
 {
     
@@ -24,6 +27,7 @@ void Game::run(void) {
     chrono::high_resolution_clock::time_point frameStart, frameEnd;
     chrono::duration<float, chrono::milliseconds::period> frameTime;
     float deltaTime = 0.0f;
+
 
     while (mBoard.isRunning()) {
         frameStart = chrono::high_resolution_clock::now();

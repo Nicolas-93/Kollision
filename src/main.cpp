@@ -7,8 +7,8 @@ Config conf = {
         .height = 480,
     },
     .title = "Kollision",
-    .nb_balls = 10,
-    .new_balls_delay = 10 /*s*/,
+    .nb_balls = 2,
+    .new_balls_delay = 5 /*s*/,
 };
 
 int main(void) {
